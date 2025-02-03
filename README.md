@@ -1,3 +1,27 @@
+# Blog App
+
+## Sample User Credentials
+
+### Admin
+
+1. email: admin@mail.com
+2. password: admin123
+
+### Regular
+
+1. email: sample@mail.com
+2. password: sample123
+
+### Features
+
+1. User Registration
+2. User Login
+3. User Add Post
+4. User Update Post
+5. User Add Comment
+6. User Delete Comment
+7. Admin Dashboard - Delete Posts
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
