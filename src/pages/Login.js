@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Form, Card, CardFooter, Button } from "react-bootstrap";
 import UserContext from "../UserContext";
 import { Notyf } from "notyf";
@@ -110,6 +110,11 @@ const Login = () => {
           </CardFooter>
         </Card>
       </Form>
+      <div className="text-white text-center mt-3">
+        <p>
+          Don't have an account yet? <Link to="/register">Register</Link> here.
+        </p>
+      </div>
     </>
   );
 };

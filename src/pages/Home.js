@@ -3,14 +3,18 @@ import {
   Container,
   Button,
   Modal,
+  Card,
   Form,
-  ListGroup,
+  Row,
+  Col,
   Spinner,
 } from "react-bootstrap";
 import axios from "axios";
 import { Notyf } from "notyf";
 import UserContext from "../UserContext";
 import { format } from "date-fns";
+import ArtPattern from "../components/ArtPattern";
+import { Link } from "react-router-dom";
 
 export const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -225,43 +229,65 @@ export const Home = () => {
 
   return (
     <>
-      <Container className="text-white">
-        <h1 className="text-center my-5">Check out the latest posts!</h1>
-        <div className="text-center mb-4">
-          <Button variant="primary" onClick={() => setShowAddModal(true)}>
+      <Container className="text-white py-5">
+        <h1 className="text-center mb-4 fw-bold">📝 Latest Blog Posts</h1>
+
+        <div className="d-flex justify-content-center mb-4">
+          <Button
+            variant="primary"
+            className="px-4 py-2 fw-semibold shadow"
+            onClick={() => setShowAddModal(true)}
+          >
             Add Post
           </Button>
         </div>
-        <ListGroup>
-          {isLoggedIn ? (
-            posts.length > 0 ? (
-              posts.map((post) => (
-                <ListGroup.Item
-                  className="post mb-5 bg-dark text-white"
-                  key={post._id}
-                >
-                  <h4>{post.title}</h4>
-                  <p className="text-info">{post.author.name}</p>
-                  <p>{post.content}</p>
 
-                  <small className="text-secondary">
-                    Updated On:{" "}
-                    {format(new Date(post.updatedAt), "MMMM dd, yyyy")}
-                  </small>
-                  <div className="mt-3">
-                    <Button variant="link" onClick={() => handleViewPost(post)}>
-                      <small>View Post</small>
-                    </Button>
-                  </div>
-                </ListGroup.Item>
-              ))
-            ) : (
-              <h5 className="text-center">{message}</h5>
-            )
+        {isLoggedIn ? (
+          posts.length > 0 ? (
+            <Row className="g-4">
+              {posts.map((post) => (
+                <Col key={post._id} md={6} lg={4}>
+                  <Card className="bg-dark text-white shadow-sm h-100">
+                    <Card.Body>
+                      <Card.Title className="fw-bold">{post.title}</Card.Title>
+                      <Card.Subtitle className="text-info mb-2">
+                        {post.author.name}
+                      </Card.Subtitle>
+                      <Card.Text className="text-light">
+                        {post.content}
+                      </Card.Text>
+                    </Card.Body>
+                    <Card.Footer className="d-flex justify-content-between align-items-center">
+                      <small className="text-secondary">
+                        Updated:{" "}
+                        {format(new Date(post.updatedAt), "MMMM dd, yyyy")}
+                      </small>
+                      <Button
+                        variant="outline-light"
+                        size="sm"
+                        onClick={() => handleViewPost(post)}
+                      >
+                        View Post
+                      </Button>
+                    </Card.Footer>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
           ) : (
-            <h5 className="text-center">{message}</h5>
-          )}
-        </ListGroup>
+            <h5 className="text-center mt-4">{message}</h5>
+          )
+        ) : (
+          <>
+            <div>
+              <ArtPattern />
+            </div>
+            <h5 className="text-center mt-4">
+              <Link to="/register">Register</Link> or{" "}
+              <Link to="/login">Log in</Link> to explore!
+            </h5>
+          </>
+        )}
       </Container>
 
       {selectedPost && (
